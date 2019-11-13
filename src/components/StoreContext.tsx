@@ -1,14 +1,19 @@
 import React, { createContext, useState } from 'react'
 
-export const StoreContext = createContext(null)
+interface Props {
 
-export const StoreProvider = ({ children }) => {
+}
+
+export type UseStateTuple<T> = [T,React.Dispatch<React.SetStateAction<T>>]
+export const StoreContext = createContext<IStore | null>(null)
+export interface IStore {
+  people: UseStateTuple<string[]>
+}
+export const StoreProvider:React.FC<Props> = ({ children }) => {
   const peoplesNames = ['John', 'Mary', 'Jason', 'David']
-
-  const [people, setPeople] = useState(peoplesNames)
-
-  const store = {
-    people: [people, setPeople]
+  const people: UseStateTuple<string[]> = useState(peoplesNames)
+  const store:IStore = {
+    people
   }
 
   return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>

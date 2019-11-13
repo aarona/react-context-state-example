@@ -1,12 +1,18 @@
 import React, { useContext } from 'react'
-import { StoreContext } from './StoreContext'
+import { StoreContext, UseStateTuple } from './StoreContext'
 
-export const People = () => {
-  const { people } = useContext(StoreContext)
-  const [data, setData] = people
+interface Props {
+
+}
+
+type CustomMouseEvent = React.MouseEvent<HTMLInputElement, MouseEvent>
+
+export const People: React.FC<Props> = () => {
+  const { people } = useContext(StoreContext)!
+  const [data, setData]: UseStateTuple<string[]> = people
   
-  const removeItem = (e) => {
-    const index = parseInt(e.target.value)
+  const removeItem = (e:CustomMouseEvent) => {
+    const index = parseInt(e.currentTarget.value)
     const newData = data.filter((d, i) => {
       return i !== index
     })

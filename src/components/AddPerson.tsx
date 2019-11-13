@@ -1,21 +1,16 @@
 import React, { useContext, useState } from 'react'
-import { StoreContext } from './StoreContext'
+import { StoreContext, IStore } from './StoreContext'
 
 type CustomeFormEvent = React.FormEvent<HTMLFormElement>
 
 interface Props {
-  type: string
+  type: keyof IStore
   description: string
 }
 
 export const AddPerson: React.FC<Props> = ({type, description}) => {
   const [input, setInput] = useState('')
-  
-  //const { [type]: [data, setData] } = useContext(StoreContext)!
-  
-  const { people } = useContext(StoreContext)!
-  const [data, setData] = people
-  
+  const { [type]: [data, setData] } = useContext(StoreContext)!
   const onSubmit = (e: CustomeFormEvent) => {
     e.preventDefault()
     setData([...data, input])
